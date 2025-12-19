@@ -1,0 +1,20 @@
+# env
+.env
+src/.env
+
+# dependencies
+src/vendor/
+src/node_modules/
+
+# laravel runtime
+src/storage/logs/
+src/storage/framework/
+src/storage/*.key
+src/public/storage
+
+# editor
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+

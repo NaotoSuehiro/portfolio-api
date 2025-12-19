@@ -1,0 +1,17 @@
+# Docker関連
+Dockerfile
+.dockerignore
+
+# Git関連
+.git
+.gitignore
+
+# 開発関連
+.env
+*.log
+*.md
+
+# テスト関連
+src/tests/
+*Test.php
+phpunit.xml
