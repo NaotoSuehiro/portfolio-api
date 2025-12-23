@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domain\User\ValueObject;
 
-use App\Domain\User\ValueObject\LoginId;
+use App\Domain\User\ValueObject\Email;
 use App\Exceptions\DomainException;
 use PHPUnit\Framework\TestCase;
 
@@ -11,7 +11,6 @@ class EmailTest extends TestCase
     //正常系
     public function testCreateInstanceEmail(): void
     {
-        //インスタンス用テスト
         $email  = "test@mail.com";
         $instanceEmail = Email::create($email);
         $this->assertInstanceOf(Email::class, $instanceEmail);
@@ -19,42 +18,34 @@ class EmailTest extends TestCase
     }
 
     //異常系：空欄
-    public function testCreateEmptyLoginIdThrowsException(): void
+    public function testCreateEmptyEmailThrowsException(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('メールアドレスは空欄にできません');
-        LoginId::fromString('');
+        Email::create('');
     }
 
     //異常系：スペースのみ
-    public function testCreateLoginIdWithWhitespaceOnly(): void
+    public function testCreateEmailWithWhitespaceOnly(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('メールアドレスは空欄にできません');
-        LoginId::fromString('   ');
+        Email::create('   ');
     }
 
-    //異常系
+    //異常系:@なしの英数字
     public function testCreateLoginSpaceError(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('メールアドレスの形式が正しくありません');
-        LoginId::fromString('abcde');
+        Email::create('abcde');
     }
 
-    //異常系:
+    //異常系:＠が全角
     public function testCreateLoginErrorKana(): void
     {
         $this->expectException(DomainException::class);
-        $this->expectExceptionMessage('メールアドレスは半角英数字・記号のみ使用可能です');
-        LoginId::fromString('あいうえお');
-    }
-
-    //異常系:
-    public function testCreateLoginErrorMix(): void
-    {
-        $this->expectException(DomainException::class);
-        $this->expectExceptionMessage('メールアドレスは半角英数字・記号のみ使用可能です');
-        LoginId::fromString('aあb');
+        $this->expectExceptionMessage('メールアドレスの形式が正しくありません');
+        Email::create('abc＠mail.com');
     }
 }

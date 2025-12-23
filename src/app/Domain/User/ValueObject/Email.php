@@ -31,7 +31,7 @@ class Email implements ValueObjectInterface
     private static function validate(string $value): void
     {
         if (trim($value) === '') {
-            throw new DomainException('ログインIDは空欄にできません');
+            throw new DomainException('メールアドレスは空欄にできません');
         }
 
         //半角英数字記号のみ

@@ -5,28 +5,27 @@ namespace Tests\Unit\Domain\User\ValueObject;
 use App\Domain\User\ValueObject\UserPassword;
 use App\Exceptions\DomainException;
 use Illuminate\Support\Facades\Hash;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class UserPasswordTest extends TestCase
 {
     //正常系 大文字・小文字
     public function testCreateInstanceUserPasswordSucsess(): void
     {
-        $user_password  = "Password123456";
-        $instance_user_password = UserPassword::create($user_password);
-        $this->assertInstanceOf(UserPassword::class, $instance_user_password);
-        $this->assertTrue(Hash::check($user_password, $instance_user_password->value()));
+        $userPassword  = "Password123456";
+        $instance_userPassword = UserPassword::create($user_password);
+        $this->assertInstanceOf(UserPassword::class, $instanceUserPassword);
+        $this->assertTrue(Hash::check($user_password, $instanceUserPassword->value()));
     }
 
     //小文字・記号
     public function testCreateInstanceUserPasswordSucsess2(): void
     {
-        $user_password  = "test@mail.com";
-        $instance_user_password = UserPassword::create($user_password);
-        $this->assertInstanceOf(UserPassword::class, $instance_user_password);
-        $this->assertTrue(Hash::check($user_password, $instance_user_password->value()));
+        $userPassword  = "test@mail.com";
+        $instance_userPassword = UserPassword::create($user_password);
+        $this->assertInstanceOf(UserPassword::class, $instanceUserPassword);
+        $this->assertTrue(Hash::check($user_password, $instanceUserPassword->value()));
     }
-
 
     //異常系：スペースのみ
     public function testCreateUserPasswordUnder8(): void
