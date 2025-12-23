@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'postgres'),
 
     /*
     |--------------------------------------------------------------------------
@@ -31,17 +31,32 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'url' => env('DB_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+        //PostgreSQL
+        'postgres' => [
+            'driver' => 'pgsql',
+            'host' => env('POSTGRES_DB_HOST'),
+            'port' => env('POSTGRES_DB_PORT'),
+            'database' => env('POSTGRES_DB_DATABASE'),
+            'username' => env('POSTGRES_DB_USERNAME'),
+            'password' => env('POSTGRES_DB_PASSWORD'),
+            'charset' => 'utf8',
             'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'busy_timeout' => null,
-            'journal_mode' => null,
-            'synchronous' => null,
-            'transaction_mode' => 'DEFERRED',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
         ],
+
+        // 'sqlite' => [
+        //     'driver' => 'sqlite',
+        //     'url' => env('DB_URL'),
+        //     'database' => env('DB_DATABASE', database_path('database.sqlite')),
+        //     'prefix' => '',
+        //     'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        //     'busy_timeout' => null,
+        //     'journal_mode' => null,
+        //     'synchronous' => null,
+        //     'transaction_mode' => 'DEFERRED',
+        // ],
 
         'mysql' => [
             'driver' => 'mysql',
