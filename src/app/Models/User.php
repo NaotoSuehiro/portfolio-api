@@ -55,13 +55,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function inquiryTalks(): HasMany
+    public function inquiryComments(): HasMany
     {
-        return $this->HasMany(InquiryTasks::class, 'user_id', 'user_id');
+        return $this->HasMany(InquiryComment::class, 'user_id', 'user_id');
     }
 
-    public function inquiryTalks(): HasMany
+    public function inquiryTasks(): HasMany
     {
-        return $this->hasMany(InquiryTalks::class, 'user_id', 'user_id');
+        return $this->hasMany(InquiryTask::class, 'user_id', 'user_id');
     }
 }

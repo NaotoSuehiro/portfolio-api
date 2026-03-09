@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class InquiryTalks extends Authenticatable
+class InquiryComment extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -37,6 +37,6 @@ class InquiryTalks extends Authenticatable
 
     public function inquiryTasks(): BelongsTo
     {
-        return $this->belongsTo(InquiryTasks::class, 'inquiry_task_id', 'inquiry_task_id');
+        return $this->belongsTo(InquiryTask::class, 'inquiry_task_id', 'inquiry_task_id');
     }
 }

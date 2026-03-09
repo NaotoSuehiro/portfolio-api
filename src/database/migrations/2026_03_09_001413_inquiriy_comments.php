@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inquiry_talks', function (Blueprint $table) {
-            $table->uuid('inquiry_talk_id')->primary();
+        Schema::create('inquiry_comments', function (Blueprint $table) {
+            $table->uuid('inquiry_comment_id')->primary();
             $table->uuid('inquiry_task_id');
             $table->foreign('inquiry_task_id')->references('inquiry_task_id')->on('inquiry_tasks');
             $table->uuid('user_id');
@@ -27,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+       Schema::dropIfExists('inquiry_comments');
        Schema::dropIfExists('inquiry_talks');
     }
 };
