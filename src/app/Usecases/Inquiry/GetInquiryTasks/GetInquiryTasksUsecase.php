@@ -7,6 +7,7 @@ namespace App\Usecases\Inquiry\GetInquiryTasks;
 use App\Domain\Inquiry\Interface\InquiryQueryInterface;
 use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksRequestDto;
 use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksResponseDto;
+use App\Exceptions\ValidationException;
 
 class GetInquiryTasksUsecase
 {

@@ -29,28 +29,27 @@ use Exception;
  */
 abstract class BusinessLogicException extends Exception
 {
-    abstract public function getErrorCode(): string;
 
-    /**
-     * エラーメッセージを取得する
-     */
-    public function getErrorMessage(): string
+  protected string $errorCode = 'BUSINESS_ERROR';
+  protected int $httpStatus = 400;
+  
+  public function getErrorCode(): string
     {
-        return $this->getMessage() ?? $this->getDefaultErrorMessage();
+        return $this->errorCode;
     }
 
-    /**
-     * デフォルトのエラーメッセージを取得する
-     */
+    public function getHttpStatus(): int
+    {
+        return $this->httpStatus;
+    }
+
+    public function getErrorMessage(): string
+    {
+        return $this->getMessage() ?: $this->getDefaultErrorMessage();
+    }
+
     protected function getDefaultErrorMessage(): string
     {
-        return match (get_class($this)) {
-            DatabaseOperationException::class => 'データベース操作中にエラーが発生しました。',
-            ExternalApiException::class => '外部APIの取得時にエラーが発生しました。',
-            DomainException::class => 'ビジネスルール違反が発生しました。',
-            ValidationException::class => '入力値が無効です。',
-            ResourceNotFoundException::class => '指定されたリソースが見つかりません。',
-            default => 'エラーが発生しました。しばらく経ってからもう一度お試しください。',
-        };
+        return 'エラーが発生しました。';
     }
 }
