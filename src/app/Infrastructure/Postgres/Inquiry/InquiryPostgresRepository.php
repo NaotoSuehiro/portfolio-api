@@ -26,7 +26,7 @@ class InquiryPostgresRepository implements InquiryRepositoryInterface
                 'user_id' => $inquiryTask->userId()->value(),
             ]);
         } catch (\Exception $e) {
-            throw new DatabaseOperationException('ユーザーの作成に失敗しました。');
+            throw new DatabaseOperationException('問い合わせの作成に失敗しました。');
         }
     }
 
