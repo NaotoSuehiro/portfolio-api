@@ -6,6 +6,7 @@ use App\Domain\Common\ValueObject\UUId;
 use App\Domain\User\Entity\User;
 use App\Domain\User\ValueObject\Email;
 use App\Domain\User\ValueObject\UserPassword;
+use App\Domain\User\ValueObject\UserName;
 
 class UserFactory
 {
@@ -19,7 +20,7 @@ class UserFactory
             id: UUId::generate(),
             email: Email::create($email),
             password: UserPassword::create($password),
-            userName: (string)$userName
+            userName: UserName::create($userName)
         );
     }
 
@@ -34,7 +35,7 @@ class UserFactory
             id: UUId::reconstruct($userId),
             email: Email::reconstruct($email),
             password: UserPassword::reconstruct($password),
-            userName:(string)$userName
+            userName:UserName::reconstruct($userName)
         );
     }
 }

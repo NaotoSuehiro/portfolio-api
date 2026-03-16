@@ -5,6 +5,7 @@ namespace App\Domain\User\Entity;
 use App\Domain\Common\ValueObject\UUId;
 use App\Domain\User\ValueObject\Email;
 use App\Domain\User\ValueObject\UserPassword;
+use App\Domain\User\ValueObject\UserName;
 use App\Domain\Common\Entity\EntityInterface;
 use App\Domain\Common\Entity\EntityTrait;
 
@@ -16,7 +17,7 @@ class User implements EntityInterface
         private UUId $id,
         private Email $email,
         private UserPassword $password,
-        private string $userName
+        private UserName $userName
     ) {}
 
     public function id(): UUId
@@ -34,7 +35,7 @@ class User implements EntityInterface
         return $this->password;
     }
 
-    public function userName(): string
+    public function userName(): UserName
     {
         return $this->userName;
     }
@@ -51,7 +52,7 @@ class User implements EntityInterface
         $this->password = $password;
     }
 
-    public function updateUserName(string $userName): void
+    public function updateUserName(UserName $userName): void
     {
         $this->userName = $userName;
     }
