@@ -10,6 +10,7 @@ use App\Domain\User\DomainService\UserService;
 use App\Usecases\User\UpdateUser\Dto\UpdateUserRequestDto;
 use App\Domain\User\ValueObject\Email;
 use App\Domain\User\ValueObject\UserPassword;
+use App\Domain\User\ValueObject\UserName;
 use App\Exceptions\ResourceNotFoundException;
 use App\Domain\Common\ValueObject\UUId;
 
@@ -33,7 +34,8 @@ class UpdateUserUsecase
 
         //ユーザー名
         if($dto->userName){
-            $user->updateUserName($dto->userName);
+            $userName = UserName::create($dto->userName);
+            $user->updateUserName($userName);
         }
 
         //パスワード

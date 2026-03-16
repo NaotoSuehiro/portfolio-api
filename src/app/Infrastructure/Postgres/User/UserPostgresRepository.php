@@ -41,7 +41,7 @@ class UserPostgresRepository implements UserRepositoryInterface
                     'user_id' => $user->id()->value(),
                     'email' => $user->email()->value(),
                     'password' => $user->userPassword()->value(),
-                    'user_name' => $user->userName()
+                    'user_name' => $user->userName()->value()
                 ]
             );
         } catch (\Exception $e) {
@@ -55,7 +55,7 @@ class UserPostgresRepository implements UserRepositoryInterface
             UserModel::where('user_id', $user->id()->value())->update([
                         'email'     => $user->email()->value(),
                         'password'  => $user->userPassword()->value(),
-                        'user_name' => $user->userName(),
+                        'user_name' => $user->userName()->value(),
                     ]);
         } catch (\Exception $e) {
             throw new DatabaseOperationException('ユーザーの更新に失敗しました。');
