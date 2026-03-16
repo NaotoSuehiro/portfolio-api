@@ -67,7 +67,7 @@ class UserPostgresQuery implements UserQueryInterface
     private function toListItemDto(User $user): UserListItemDto
     {
         return new UserListItemDto(
-            userId: $user->getAttribute('user_id'),
+            userId: $user->getKey(),
             userName: $user->getAttribute('user_name'),
             email: $user->getAttribute('email'),
         );

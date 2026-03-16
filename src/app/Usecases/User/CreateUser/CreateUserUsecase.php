@@ -9,7 +9,6 @@ use App\Domain\User\Interface\UserRepositoryInterface;
 use App\Domain\User\DomainService\UserService;
 use App\Exceptions\DatabaseOperationException;
 use App\Domain\User\ValueObject\Email;
-use App\Helpers\Auth\AuthZHelper;
 use App\Usecases\User\CreateUser\Dto\CreateUserRequestDto;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
