@@ -4,9 +4,11 @@ namespace App\Domain\Inquiry\Factory;
 
 use App\Domain\Common\ValueObject\UUId;
 use App\Domain\Inquiry\Entity\InquiryTask;
+use App\Domain\Inquiry\Entity\InquiryComment;
 use App\Domain\Inquiry\ValueObject\Title;
 use App\Domain\Inquiry\ValueObject\Content;
 use App\Domain\Inquiry\ValueObject\InquiryStatus;
+use App\Domain\Inquiry\ValueObject\Comment;
 
 class InquiryFactory
 {
@@ -23,6 +25,20 @@ class InquiryFactory
             content: Content::create($content),
             status: InquiryStatus::create($status),
             userId: UUId::create($userId)
+        );
+    }
+
+    public function createComment(
+        string $inquiryTaskId,
+        string $userId,
+        string $comment
+    ): InquiryComment 
+    {
+        return new InquiryComment(
+            id: UUId::generate(),
+            inquiryTaskId: UUId::create($inquiryTaskId),
+            userId: UUId::create($userId),
+            comment: Comment::create($comment),
         );
     }
 }

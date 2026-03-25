@@ -6,10 +6,16 @@ namespace App\Infrastructure\Postgres\Inquiry;
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\InquiryTask;
+use App\Models\InquiryComment;
 use App\Domain\Inquiry\Interface\InquiryQueryInterface;
 use App\Usecases\Inquiry\GetInquiryTasks\Dto\InquiryTaskItemDto;
 use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksRequestDto;
 use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksResponseDto;
+
+use App\Usecases\Inquiry\GetInquiryTask\Dto\GetInquiryTaskResponseDto;
+use App\Usecases\Inquiry\GetInquiryTask\Dto\GetInquiryTaskRequestDto;
+use App\Usecases\Inquiry\GetInquiryTask\Dto\InquiryTaskDetailDto;
+use App\Usecases\Inquiry\GetInquiryTask\Dto\InquiryTaskCommentDto;
 
 class InquiryPostgresQuery implements InquiryQueryInterface
 {
@@ -92,11 +98,46 @@ class InquiryPostgresQuery implements InquiryQueryInterface
     {
 
         return new InquiryTaskItemDto(
-            inquiryId: $inquiry->getKey(),
+            inquiryTaskId: $inquiry->getKey(),
             title: $inquiry->getAttribute('title'),
             content: $inquiry->getAttribute('content'),
             status: $inquiry->getAttribute('status'),
             createdAt: $inquiry->getAttribute('created_at')
         );
     }
+
+    /*タスク詳細を取得*/
+    public function fetchInquiryTaskDetail(GetInquiryTaskRequestDto $dto):GetInquiryTaskResponseDto
+    {
+
+       $inquiries = InquiryTask::with('inquiryComments')->where('inquiry_task_id', $dto->inquiryTaskId)->get();
+
+        return new GetInquiryTaskResponseDto(
+            data: $inquiries->map(fn($inquiry) => $this->toTaskDetailDto($inquiry))->all()
+        );
+    }
+
+    private function toTaskDetailDto(InquiryTask $inquiry): InquiryTaskDetailDto
+    {
+        return new InquiryTaskDetailDto(
+            inquiryTaskId: $inquiry->getKey(),
+            title: $inquiry->getAttribute('title'),
+            content: $inquiry->getAttribute('content'),
+            status: $inquiry->getAttribute('status'),
+            createdAt: $inquiry->getAttribute('created_at'),
+            comments: $inquiry->inquiryComments
+                ->map(fn($comment) => $this->toCommentDto($comment))
+                ->all()
+        );
+    }
+
+    private function toCommentDto(InquiryComment $comment): InquiryTaskCommentDto
+    {
+        return new InquiryTaskCommentDto(
+            inquiryCommentId: $comment->getAttribute('inquiry_comment_id'),
+            userId: $comment->getAttribute('user_id'),
+            comment: $comment->getAttribute('comment'),
+            createdAt: $comment->getAttribute('created_at')
+        );
+    } 
 }
