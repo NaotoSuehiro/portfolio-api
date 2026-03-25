@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('inquiry_task_id')->references('inquiry_task_id')->on('inquiry_tasks');
             $table->uuid('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');
-            $table->text('content');
+            $table->text('comment');
             $table->timestamps();
         });
     }

@@ -4,10 +4,13 @@ namespace App\Infrastructure\Postgres\Inquiry;
 
 use App\Domain\Common\ValueObject\UUId;
 use App\Models\InquiryTask as InquiryTaskModel;
+use App\Models\InquiryComment as InquiryCommentModel;
 use App\Domain\Inquiry\Entity\InquiryTask;
+use App\Domain\Inquiry\Entity\InquiryComment;
 use App\Domain\Inquiry\Interface\InquiryRepositoryInterface;
 use App\Domain\Inquiry\Factory\InquiryFactory;
 use App\Exceptions\DatabaseOperationException;
+use Illuminate\Support\Facades\Log;
 
 class InquiryPostgresRepository implements InquiryRepositoryInterface
 {
@@ -38,6 +41,20 @@ class InquiryPostgresRepository implements InquiryRepositoryInterface
             ]);
         } catch (\Exception $e) {
             throw new DatabaseOperationException('ステータスの更新に失敗しました');
+        }
+    }
+
+    public function createComment(InquiryComment $inquiryComment):void
+    {
+        try {
+            InquiryCommentModel::create([
+                'inquiry_comment_id' => $inquiryComment->id()->value(),
+                'inquiry_task_id'    => $inquiryComment->inquiryTaskId()->value(),
+                'user_id'            => $inquiryComment->userId()->value(),
+                'comment'            => $inquiryComment->comment()->value()
+            ]);
+        } catch (\Exception $e) {
+            throw new DatabaseOperationException('問い合わせの作成に失敗しました。');
         }
     }
 
