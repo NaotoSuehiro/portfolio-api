@@ -47,8 +47,8 @@ class InquiryTask implements EntityInterface
     }
 
     /*更新系**********************************************/
-    public function updateStatus(string $status): void
+    public function updateStatus(InquiryStatus $status): void
     {
-        $this->status = InquiryStatus::create($status);
+        $this->status = $status;
     }
 }

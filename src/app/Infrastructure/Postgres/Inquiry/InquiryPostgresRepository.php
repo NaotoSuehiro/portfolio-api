@@ -15,8 +15,14 @@ use Illuminate\Support\Facades\Log;
 class InquiryPostgresRepository implements InquiryRepositoryInterface
 {
     public function __construct(
-        private readonly InquiryFactory $userFactory
+        private readonly InquiryFactory $inquiryFactory
     ) {}
+
+    public function findByInquiryTaskId(UUId $id): ?InquiryTask
+    {
+        $model = InquiryTaskModel::find($id->value());
+        return $model ? $this->toDomainModel($model) : null;
+    }
 
     public function createTask(InquiryTask $inquiryTask):void
     {
@@ -58,14 +64,14 @@ class InquiryPostgresRepository implements InquiryRepositoryInterface
         }
     }
 
-    private function toDomainModel(InquiryModel $model): Inquiry
+    private function toDomainModel(InquiryTaskModel $model): InquiryTask
     {
-        return $this->userFactory->reconstruct(
-            inquiryTaskId: $model->getAttribute('inquiry_task_id'),
+        return $this->inquiryFactory->reconstructTask(
+            id: $model->getkey(),
             title: $model->getAttribute('title'),
             content: $model->getAttribute('content'),
             status: $model->getAttribute('status'),
-            userId: $model->getAttribute('user_id'),
+            userId: $model->getAttribute('user_id')
         );
     }
 }

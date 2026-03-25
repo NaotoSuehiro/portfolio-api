@@ -8,9 +8,11 @@ use App\Http\Requests\Inquiry\GetInquiryTaskListRequest;
 use App\Http\Requests\Inquiry\GetInquiryTaskRequest;
 use App\Http\Requests\Inquiry\GetInquiryRequest;
 use App\Http\Requests\Inquiry\CreateInquiryTaskRequest;
+use App\Http\Requests\Inquiry\UpdateInquiryTaskStatusRequest;
 use App\Usecases\Inquiry\GetInquiryTaskList\GetInquiryTaskListUsecase;
 use App\Usecases\Inquiry\GetInquiryTask\GetInquiryTaskUsecase;
 use App\Usecases\Inquiry\CreateInquiryTask\CreateInquiryTaskUsecase;
+use App\Usecases\Inquiry\UpdateInquiryTaskStatus\UpdateInquiryTaskStatusUsecase;
 
 
 class InquiryController extends Controller
@@ -20,6 +22,7 @@ class InquiryController extends Controller
         private readonly GetInquiryTaskListUsecase $getInquiryTaskListUsecase,
         private readonly GetInquiryTaskUsecase  $getInquiryTaskUsecase,
         private readonly CreateInquiryTaskUsecase $createInquiryTaskUsecase,
+        private readonly UpdateInquiryTaskStatusUsecase $updateInquiryTaskStatusUsecase,
     ) {}
 
     /**
@@ -73,6 +76,15 @@ class InquiryController extends Controller
     public function store(CreateInquiryTaskRequest $request): object
     {
         $this->createInquiryTaskUsecase->handle($request->toDto());
+        return response()->noContent();
+    }
+
+    /**
+     * タスクのステータス更新
+     */
+    public function updateTaskStatus(UpdateInquiryTaskStatusRequest $request): object
+    {
+        $this->updateInquiryTaskStatusUsecase->handle($request->toDto());
         return response()->noContent();
     }
 }

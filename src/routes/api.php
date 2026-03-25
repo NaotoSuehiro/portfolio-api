@@ -19,6 +19,7 @@ Route::prefix('inquiries')->group(function () {
     Route::get('/', [InquiryController::class, 'index']);
     Route::get('/{inquiryTaskId}', [InquiryController::class, 'show']);
     Route::post('/new', [InquiryController::class, 'store']);
+    Route::put('/{inquiryTaskId}', [InquiryController::class, 'updateTaskStatus']);
 
     //問い合わせコメント
     Route::post('/{inquiryTaskId}/comments', [InquiryCommentController::class, 'store']);
