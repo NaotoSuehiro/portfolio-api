@@ -10,6 +10,8 @@ use App\Domain\Inquiry\Entity\InquiryComment;
 
 interface InquiryRepositoryInterface
 {
+    public function findByInquiryTaskId(UUId $id): ?InquiryTask;
+
     public function createTask(InquiryTask $inquiryTask): void;
 
     public function updateTaskStatus(InquiryTask $inquiryTask): void;

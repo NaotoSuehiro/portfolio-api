@@ -28,6 +28,23 @@ class InquiryFactory
         );
     }
 
+    public function reconstructTask(
+        string $id,
+        string $title,
+        string $content,
+        string $status,
+        string $userId
+    ): InquiryTask 
+    {
+        return new InquiryTask(
+            id: UUId::reconstruct($id),
+            title: Title::reconstruct($title),
+            content: Content::reconstruct($content),
+            status: InquiryStatus::reconstruct($status),
+            userId: UUId::reconstruct($userId)
+        );
+    }
+
     public function createComment(
         string $inquiryTaskId,
         string $userId,
