@@ -18,7 +18,7 @@ class InquiryPostgresRepository implements InquiryRepositoryInterface
         private readonly InquiryFactory $userFactory
     ) {}
 
-    public function create(InquiryTask $inquiryTask):void
+    public function createTask(InquiryTask $inquiryTask):void
     {
         try {
             InquiryTaskModel::create([
@@ -33,7 +33,7 @@ class InquiryPostgresRepository implements InquiryRepositoryInterface
         }
     }
 
-    public function update(InquiryTask $inquiryTask): void
+    public function updateTaskStatus(InquiryTask $inquiryTask): void
     {
         try {
             InquiryTaskModel::where('inquiry_task_id', $inquiryTask->id()->value())->update([

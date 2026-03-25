@@ -10,9 +10,9 @@ use App\Domain\Inquiry\Entity\InquiryComment;
 
 interface InquiryRepositoryInterface
 {
-    public function create(InquiryTask $inquiryTask): void;
+    public function createTask(InquiryTask $inquiryTask): void;
 
-    public function update(InquiryTask $inquiryTask): void;
+    public function updateTaskStatus(InquiryTask $inquiryTask): void;
 
     public function createComment(InquiryComment $inquiryTask): void;
 }

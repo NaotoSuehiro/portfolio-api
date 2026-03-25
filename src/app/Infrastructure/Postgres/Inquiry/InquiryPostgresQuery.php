@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\InquiryTask;
 use App\Models\InquiryComment;
 use App\Domain\Inquiry\Interface\InquiryQueryInterface;
-use App\Usecases\Inquiry\GetInquiryTasks\Dto\InquiryTaskItemDto;
-use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksRequestDto;
-use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksResponseDto;
+use App\Usecases\Inquiry\GetInquiryTaskList\Dto\InquiryTaskItemDto;
+use App\Usecases\Inquiry\GetInquiryTaskList\Dto\GetInquiryTaskListRequestDto;
+use App\Usecases\Inquiry\GetInquiryTaskList\Dto\GetInquiryTaskListResponseDto;
 
 use App\Usecases\Inquiry\GetInquiryTask\Dto\GetInquiryTaskResponseDto;
 use App\Usecases\Inquiry\GetInquiryTask\Dto\GetInquiryTaskRequestDto;
@@ -20,7 +20,7 @@ use App\Usecases\Inquiry\GetInquiryTask\Dto\InquiryTaskCommentDto;
 class InquiryPostgresQuery implements InquiryQueryInterface
 {
 
-    public function fetchInquiryTasks(GetInquiryTasksRequestDto $dto): GetInquiryTasksResponseDto
+    public function fetchInquiryTaskList(GetInquiryTaskListRequestDto $dto): GetInquiryTaskListResponseDto
     {
         $query = InquiryTask::query();
 
@@ -40,13 +40,13 @@ class InquiryPostgresQuery implements InquiryQueryInterface
             ->limit($dto->limit)
             ->get();
 
-        return new GetInquiryTasksResponseDto(
+        return new GetInquiryTaskListResponseDto(
             totalCount: $totalCount,
             data: $inquiries->map(fn($inquiry) => $this->toListItemDto($inquiry))->all()
         );
     }
 
-    private function applyFilters(Builder $query, GetInquiryTasksRequestDto  $dto): void
+    private function applyFilters(Builder $query, GetInquiryTaskListRequestDto  $dto): void
     {
         if (!empty($dto->title)) {
             $query->where(

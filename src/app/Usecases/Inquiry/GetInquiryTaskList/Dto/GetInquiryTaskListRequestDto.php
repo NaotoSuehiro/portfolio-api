@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Usecases\Inquiry\GetInquiryTasks\Dto;
+namespace App\Usecases\Inquiry\GetInquiryTaskList\Dto;
 
-class GetInquiryTasksRequestDto
+class GetInquiryTaskListRequestDto
 {
     public function __construct(
         public readonly ?string $title,

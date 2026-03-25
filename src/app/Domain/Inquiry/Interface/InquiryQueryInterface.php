@@ -2,15 +2,15 @@
 
 namespace App\Domain\Inquiry\Interface;
 
-use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksResponseDto;
-use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksRequestDto;
+use App\Usecases\Inquiry\GetInquiryTaskList\Dto\GetInquiryTaskListResponseDto;
+use App\Usecases\Inquiry\GetInquiryTaskList\Dto\GetInquiryTaskListRequestDto;
 use App\Usecases\Inquiry\GetInquiryTask\Dto\GetInquiryTaskResponseDto;
 use App\Usecases\Inquiry\GetInquiryTask\Dto\GetInquiryTaskRequestDto;
 
 
 interface InquiryQueryInterface
 {
-    public function fetchInquiryTasks(GetInquiryTasksRequestDto $dto): GetInquiryTasksResponseDto;
+    public function fetchInquiryTaskList(GetInquiryTaskListRequestDto $dto): GetInquiryTaskListResponseDto;
 
     public function fetchInquiryTaskDetail(GetInquiryTaskRequestDto $dto):GetInquiryTaskResponseDto;
 
