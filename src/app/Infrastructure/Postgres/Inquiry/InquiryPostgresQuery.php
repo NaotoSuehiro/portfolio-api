@@ -113,7 +113,7 @@ class InquiryPostgresQuery implements InquiryQueryInterface
        $inquiries = InquiryTask::with('inquiryComments')->where('inquiry_task_id', $dto->inquiryTaskId)->get();
 
         return new GetInquiryTaskResponseDto(
-            data: $inquiries->map(fn($inquiry) => $this->toListItemDto($inquiry))->all()
+            data: $inquiries->map(fn($inquiry) => $this->toTaskDetailDto($inquiry))->all()
         );
     }
 
