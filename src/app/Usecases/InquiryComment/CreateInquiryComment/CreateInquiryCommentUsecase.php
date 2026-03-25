@@ -8,6 +8,7 @@ use App\Domain\Common\ValueObject\UUId;
 use App\Domain\Inquiry\Factory\InquiryFactory;
 use App\Domain\Inquiry\Interface\InquiryRepositoryInterface;
 use App\Domain\User\DomainService\UserService;
+use App\Domain\Inquiry\DomainService\InquiryService;
 use App\Exceptions\ResourceNotFoundException;
 use App\Usecases\InquiryComment\CreateInquiryComment\Dto\CreateInquiryCommentRequestDto;
 
@@ -17,14 +18,11 @@ class CreateInquiryCommentUsecase
         private readonly InquiryRepositoryInterface $inquiryRepository,
         private readonly UserService $userService,
         private readonly InquiryFactory $inquiryFactory,
+        private readonly InquiryService $inquiryService
     ) {}
 
     public function handle(CreateInquiryCommentRequestDto $dto): void
     {
-
-        //更新対象者を取得
-        $userId = UUId::create($dto->userId);
-        $this->userService->ensureUserExist($userId);
 
         //インスタンス生成
         $InquiryComment = $this->inquiryFactory->createComment(
@@ -33,7 +31,7 @@ class CreateInquiryCommentUsecase
             comment: $dto->comment
         );
 
-        //新規作成
-        $this->inquiryRepository->createComment($InquiryComment);
+        //問い合わせコメント作成
+        $this->inquiryService->createNewComment($InquiryComment);
     }
 }
