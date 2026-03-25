@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\Inquiry\GetInquiryTasksRequest;
+use App\Http\Requests\Inquiry\GetInquiryTaskListRequest;
 use App\Http\Requests\Inquiry\GetInquiryTaskRequest;
 use App\Http\Requests\Inquiry\GetInquiryRequest;
 use App\Http\Requests\Inquiry\CreateInquiryTaskRequest;
-use App\Usecases\Inquiry\GetInquiryTasks\GetInquiryTasksUsecase;
+use App\Usecases\Inquiry\GetInquiryTaskList\GetInquiryTaskListUsecase;
 use App\Usecases\Inquiry\GetInquiryTask\GetInquiryTaskUsecase;
 use App\Usecases\Inquiry\CreateInquiryTask\CreateInquiryTaskUsecase;
 
@@ -17,7 +17,7 @@ class InquiryController extends Controller
 {
 
     public function __construct(
-        private readonly GetInquiryTasksUsecase $getInquiryTasksUsecase,
+        private readonly GetInquiryTaskListUsecase $getInquiryTaskListUsecase,
         private readonly GetInquiryTaskUsecase  $getInquiryTaskUsecase,
         private readonly CreateInquiryTaskUsecase $createInquiryTaskUsecase,
     ) {}
@@ -35,9 +35,9 @@ class InquiryController extends Controller
      *    totalCount: int
      *  }
      */
-    public function index(GetInquiryTasksRequest $request): object
+    public function index(GetInquiryTaskListRequest $request): object
     {
-        $inquiries = $this->getInquiryTasksUsecase->handle($request->toDto());
+        $inquiries = $this->getInquiryTaskListUsecase->handle($request->toDto());
         return response()->json([$inquiries]);
     }
 

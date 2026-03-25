@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Usecases\Inquiry\GetInquiryTasks\Dto;
+namespace App\Usecases\Inquiry\GetInquiryTaskList\Dto;
 
-use App\Usecases\Inquiry\GetInquiryTasks\Dto\InquiryTaskItemDto;
+use App\Usecases\Inquiry\GetInquiryTaskList\Dto\InquiryTaskItemDto;
 
-class GetInquiryTasksResponseDto
+class GetInquiryTaskListResponseDto
 {
     /**
      * @param InquiryTaskItemDto[] $data

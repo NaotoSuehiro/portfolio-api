@@ -31,7 +31,7 @@ class CreateInquiryTaskUsecase
         }
 
         //インスタンス生成
-        $inquiryTask = $this->inquiryFactory->create(
+        $inquiryTask = $this->inquiryFactory->createTask(
             title: $dto->title,
             content: $dto->content,
             status: $dto->status,
@@ -39,6 +39,6 @@ class CreateInquiryTaskUsecase
         );
 
         //新規作成
-        $this->inquiryRepository->create($inquiryTask);
+        $this->inquiryRepository->createTask($inquiryTask);
     }
 }

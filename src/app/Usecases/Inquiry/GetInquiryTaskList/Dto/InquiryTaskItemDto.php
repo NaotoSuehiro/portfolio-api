@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Usecases\Inquiry\GetInquiryTasks\Dto;
+namespace App\Usecases\Inquiry\GetInquiryTaskList\Dto;
 use Illuminate\Support\Carbon;
 
 class InquiryTaskItemDto

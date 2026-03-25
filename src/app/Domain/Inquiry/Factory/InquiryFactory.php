@@ -12,7 +12,7 @@ use App\Domain\Inquiry\ValueObject\Comment;
 
 class InquiryFactory
 {
-    public function create(
+    public function createTask(
         string $title,
         string $content,
         string $status,

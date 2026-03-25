@@ -3,9 +3,9 @@
 namespace App\Http\Requests\Inquiry;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Usecases\Inquiry\GetInquiryTasks\Dto\GetInquiryTasksRequestDto;
+use App\Usecases\Inquiry\GetInquiryTaskList\Dto\GetInquiryTaskListRequestDto;
 
-class GetInquiryTasksRequest extends FormRequest
+class GetInquiryTaskListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +28,10 @@ class GetInquiryTasksRequest extends FormRequest
         ];
     }
 
-    public function toDto(): GetInquiryTasksRequestDto
+    public function toDto(): GetInquiryTaskListRequestDto
     {
         $validated = $this->validated();
-        return  new GetInquiryTasksRequestDto(
+        return  new GetInquiryTaskListRequestDto(
             title: $validated['title'] ?? null,
             content: $validated['content'] ?? null,
             status: $validated['status'] ?? null,
