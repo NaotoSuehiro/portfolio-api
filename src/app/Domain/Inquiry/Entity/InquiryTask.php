@@ -8,6 +8,7 @@ use App\Domain\Inquiry\ValueObject\Content;
 use App\Domain\Inquiry\ValueObject\InquiryStatus;
 use App\Domain\Common\Entity\EntityInterface;
 use App\Domain\Common\Entity\EntityTrait;
+use App\Domain\Inquiry\Enum\InquiryStatusEnum;
 
 class InquiryTask implements EntityInterface
 {
@@ -50,5 +51,13 @@ class InquiryTask implements EntityInterface
     public function updateStatus(InquiryStatus $status): void
     {
         $this->status = $status;
+    }
+
+    // コメント追加されると再オープンのドメインルール
+    public function reopenIfCommentAdded(): void
+    {
+        if ($this->status->isClosed()) { 
+            $this->updateStatus(InquiryStatus::fromEnum(InquiryStatusEnum::OPEN));
+        }
     }
 }

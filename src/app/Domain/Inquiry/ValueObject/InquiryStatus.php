@@ -59,6 +59,11 @@ final class InquiryStatus
         return self::$labels[$this->value->value];
     }
 
+    public function isClosed(): bool
+    {
+        return $this->value === InquiryStatusEnum::CLOSED;
+    }
+
     private static function validate(string $value): void
     {
         if ($value === '') {
