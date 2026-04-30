@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Domain\Common\Interface\TransactionManagerInterface;
+use App\Infrastructure\Postgres\Transaction\TransactionManager;
+
 use App\Domain\User\Interface\UserQueryInterface;
 use App\Infrastructure\Postgres\User\UserPostgresQuery;
 use App\Domain\User\Interface\UserRepositoryInterface;
@@ -27,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
         //問い合わせ
         $this->app->bind(InquiryQueryInterface::class, InquiryPostgresQuery::class);
         $this->app->bind(InquiryRepositoryInterface::class, InquiryPostgresRepository::class);
+
+        //トランザクション
+        $this->app->bind(TransactionManagerInterface::class, TransactionManager::class);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Inquiry\DomainService;
 
+use App\Domain\Common\Interface\TransactionManagerInterface;
 use App\Domain\Inquiry\Interface\InquiryRepositoryInterface;
 use App\Domain\Inquiry\Entity\InquiryTask;
 use App\Domain\Inquiry\Entity\InquiryComment;
@@ -15,7 +16,8 @@ class InquiryService
 {
     public function __construct(
         private readonly InquiryRepositoryInterface $inquiryRepository,
-         private readonly UserService $userService
+        private readonly UserService $userService,
+        private readonly TransactionManagerInterface $transactionManager
     ) {}
 
     /*ドメインルール
@@ -30,25 +32,19 @@ class InquiryService
 
         $inquiryTask = $this->inquiryRepository-> findByInquiryTaskId($inquiryComment->inquiryTaskId());
 
-            if (!$inquiryTask) {
-                throw new ResourceNotFoundException('タスクの取得に失敗しました');
-            }
+        if (!$inquiryTask) {
+            throw new ResourceNotFoundException('タスクの取得に失敗しました');
+        }
 
-        //コメントの追加とタスクの更新は同時に行う
-        DB::transaction(function () use ($inquiryComment) {
-
-            //問い合わせタスクの取得
-            $inquiryTask = $this->inquiryRepository-> findByInquiryTaskId($inquiryComment->inquiryTaskId());
-
-            if (!$inquiryTask) {
-                throw new ResourceNotFoundException('タスクの取得に失敗しました');
-            }
-
-            //コメント作成時にステータスがCLOSEDであれば再度OPENにする
-            $inquiryTask->reopenIfCommentAdded();
-
+        $this->transactionManager->transaction(function () use ($inquiryComment, $inquiryTask) {
+            //コメントの保存
             $this->inquiryRepository->createComment($inquiryComment);
-            $this->inquiryRepository->updateTaskStatus($inquiryTask);
+
+            //問い合わせタスクのステータスが完了になっていたら、再度OPENにする
+            if($inquiryTask->isStatusClosed()){
+                $inquiryTask->reopenStatus();
+                $this->inquiryRepository->updateTaskStatus($inquiryTask);
+            }
         });
     }
 
