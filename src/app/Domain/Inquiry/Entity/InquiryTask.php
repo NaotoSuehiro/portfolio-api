@@ -53,8 +53,12 @@ class InquiryTask implements EntityInterface
         $this->status = $status;
     }
 
-    // コメント追加されると再オープンのドメインルール
-    public function reopenIfCommentAdded(): void
+    public function isStatusClosed(): bool
+    {
+        return $this->status->isClosed();
+    }
+
+    public function reopenStatus(): void
     {
         if ($this->status->isClosed()) { 
             $this->updateStatus(InquiryStatus::fromEnum(InquiryStatusEnum::OPEN));
